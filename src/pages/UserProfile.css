@@ -1,0 +1,265 @@
+.profile-main {
+  background-color: #f8fafc;
+  padding: 0;
+}
+
+.profile-header-banner {
+  height: 160px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  position: relative;
+  padding: 24px;
+}
+
+.btn-back-profile {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s;
+}
+
+.btn-back-profile:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.profile-content-wrapper {
+  max-width: 1000px;
+  margin: -60px auto 60px;
+  padding: 0 24px;
+}
+
+.profile-info-card {
+  background-color: white;
+  border-radius: 32px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: auto 1fr 240px;
+  gap: 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef2f6;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.profile-avatar-xl {
+  width: 120px;
+  height: 120px;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 800;
+  border: 4px solid white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-main-info h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 4px;
+  letter-spacing: -1px;
+}
+
+.username-tag {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.profile-bio {
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 24px;
+  max-width: 500px;
+}
+
+.profile-meta-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 12px;
+}
+
+.badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.profile-stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-card {
+  background-color: #f8fafc;
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card.highlight {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.stat-card.highlight .stat-value {
+  color: #2563eb;
+}
+
+/* Tabs Section */
+.profile-tabs-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eef2f6;
+  padding-bottom: 4px;
+}
+
+.profile-tab {
+  background: none;
+  border: none;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.profile-tab.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.profile-tab:hover:not(.active) {
+  color: #1e293b;
+}
+
+.profile-deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.profile-deal-mini-card {
+  background-color: white;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid #eef2f6;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-deal-mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  border-color: #dbeafe;
+}
+
+.profile-deal-mini-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.mini-deal-info {
+  flex: 1;
+}
+
+.mini-deal-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.mini-progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #f1f5f9;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background-color: #2563eb;
+  border-radius: 3px;
+}
+
+.mini-stats-text {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+@media (max-width: 950px) {
+  .profile-info-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  .profile-meta-row, .profile-badges {
+    justify-content: center;
+  }
+  .profile-stats-grid {
+    flex-direction: row;
+    width: 100%;
+  }
+  .stat-card {
+    flex: 1;
+  }
+}
