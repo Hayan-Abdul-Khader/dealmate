@@ -23,7 +23,54 @@ import MemberList from '../components/MemberList';
 import './DealDetails.css';
 
 const MOCK_DEAL_DETAILS = {
-  // ... fallback
+  'fb-1': {
+    id: 'fb-1',
+    title: 'Apple iPhone 15 Pro (128GB) - Blue Titanium',
+    store_name: 'Amazon',
+    store: 'Amazon',
+    category: 'Electronics',
+    original_price: 134900,
+    discount_percent: 18,
+    image_url: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=800',
+    description: 'Get the latest iPhone 15 Pro with Aerospace-grade titanium design and A17 Pro chip.',
+    location: 'Online',
+    expiry_date: 'June 15, 2026',
+    required_members: 5,
+    features: ['Aerospace-grade titanium design', 'A17 Pro chip with 6-core GPU', 'Pro camera system (48MP Main)', 'USB-C supporting USB 3']
+  },
+  'fb-2': {
+    id: 'fb-2',
+    title: 'Nike Air Max Pulse Sneakers',
+    store_name: 'Flipkart',
+    store: 'Flipkart',
+    category: 'Fashion',
+    original_price: 12999,
+    discount_percent: 35,
+    image_url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800',
+    description: 'Nike Air Max Pulse pulls inspiration from the London music scene, bringing an underground touch.',
+    location: 'Online',
+    expiry_date: 'June 18, 2026',
+    required_members: 4,
+    features: ['Textile and synthetic leather upper', 'Point-loaded Max Air cushioning', 'Foam midsole for extra bounce']
+  },
+  'fb-3': {
+    id: 'fb-3',
+    title: 'Ergonomic Office Desk Chair',
+    store_name: 'Costco',
+    store: 'Costco',
+    category: 'Home',
+    original_price: 18500,
+    discount_percent: 45,
+    image_url: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&q=80&w=800',
+    description: 'High-back mesh ergonomic office chair with adjustable headrest, armrests, and dynamic lumbar support.',
+    location: 'Online',
+    expiry_date: 'June 20, 2026',
+    required_members: 3,
+    features: ['Breathable high-density mesh', 'Adjustable 3D armrests & headrest', 'Synchro-tilt mechanism (90-135°)', 'BIFMA certified gas lift class 4']
+  }
 };
 
 function DealDetails() {
@@ -55,6 +102,21 @@ function DealDetails() {
   const fetchDealData = async () => {
     try {
       setLoading(true);
+      
+      // If it is a fallback mock ID, load it directly
+      if (id && id.startsWith('fb-')) {
+        const mockDeal = MOCK_DEAL_DETAILS[id];
+        if (mockDeal) {
+          setDeal(mockDeal);
+          // Set mock members
+          setMembers([
+            { id: 'm-1', user_id: 'u-1', profiles: { full_name: 'Aarav Sharma', avatar_url: '', city: 'Mumbai' } },
+            { id: 'm-2', user_id: 'u-2', profiles: { full_name: 'Dia Patel', avatar_url: '', city: 'Ahmedabad' } }
+          ].slice(0, mockDeal.required_members - 1));
+          return;
+        }
+      }
+
       const { data: dealData, error: dealError } = await supabase
         .from('deals')
         .select('*')
@@ -77,7 +139,7 @@ function DealDetails() {
       }
     } catch (err) {
       console.error('Fetch error:', err.message);
-      setDeal(MOCK_DEAL_DETAILS);
+      setDeal(MOCK_DEAL_DETAILS[id] || MOCK_DEAL_DETAILS['fb-1']);
     } finally {
       setLoading(false);
     }
@@ -91,6 +153,14 @@ function DealDetails() {
     }
     try {
       setJoining(true);
+
+      // Handle mock deal join
+      if (id && id.startsWith('fb-')) {
+        setTimeout(() => {
+          navigate('/join-success', { state: { dealId: id } });
+        }, 800);
+        return;
+      }
 
       // Ensure profile exists and check address
       const { data: profileData, error: profileCheckError } = await supabase
