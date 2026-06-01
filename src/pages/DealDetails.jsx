@@ -117,29 +117,45 @@ function DealDetails() {
         }
       }
 
+      // Fetch main deal details
       const { data: dealData, error: dealError } = await supabase
         .from('deals')
         .select('*')
         .eq('id', id)
         .single();
 
-      if (dealError) throw dealError;
+      if (dealError) {
+        console.error('Deal fetch error:', dealError.message);
+        throw dealError;
+      }
       setDeal(dealData);
 
-      const { data: membersData, error: membersError } = await supabase
-        .from('group_members')
-        .select('*, profiles(full_name, avatar_url, city)')
-        .eq('deal_id', id);
+      // Fetch group members in a separate isolated try-catch block
+      try {
+        const { data: membersData, error: membersError } = await supabase
+          .from('group_members')
+          .select('*, profiles(full_name, avatar_url, city)')
+          .eq('deal_id', id);
 
-      if (membersError) throw membersError;
-      setMembers(membersData || []);
-
-      if (user) {
-        setIsMember(membersData?.some(m => m.user_id === user.id));
+        if (membersError) {
+          console.warn('Non-fatal members fetch error:', membersError.message);
+        } else {
+          setMembers(membersData || []);
+          if (user) {
+            setIsMember(membersData?.some(m => m.user_id === user.id));
+          }
+        }
+      } catch (memErr) {
+        console.warn('Error fetching group members (non-fatal):', memErr.message);
       }
+
     } catch (err) {
       console.error('Fetch error:', err.message);
-      setDeal(MOCK_DEAL_DETAILS[id] || MOCK_DEAL_DETAILS['fb-1']);
+      if (id && id.startsWith('fb-')) {
+        setDeal(MOCK_DEAL_DETAILS[id]);
+      } else {
+        setDeal(null);
+      }
     } finally {
       setLoading(false);
     }
