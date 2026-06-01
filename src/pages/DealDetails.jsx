@@ -226,6 +226,41 @@ function DealDetails() {
     }
   };
 
+  const leaveGroup = async () => {
+    if (!window.confirm('Are you sure you want to leave this group buy?')) {
+      return;
+    }
+    try {
+      setJoining(true);
+
+      // Handle mock deal leave
+      if (id && id.startsWith('fb-')) {
+        setTimeout(() => {
+          setIsMember(false);
+          setMembers([]);
+          alert('You have successfully left the group.');
+        }, 800);
+        return;
+      }
+
+      const { error } = await supabase
+        .from('group_members')
+        .delete()
+        .eq('deal_id', id)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      
+      fetchDealData();
+      setIsMember(false);
+      alert('You have successfully left the group.');
+    } catch (err) {
+      alert('Error leaving group: ' + err.message);
+    } finally {
+      setJoining(false);
+    }
+  };
+
   const handleSaveAddressAndJoin = async (e) => {
     e.preventDefault();
     try {
@@ -446,12 +481,43 @@ function DealDetails() {
                     {joining ? 'Joining...' : 'Join This Group'}
                   </button>
                 ) : joinedCount < totalRequired ? (
-                  <button 
-                    className="btn-join-large joined" 
-                    disabled
-                  >
-                    ✓ Joined - Waiting for Group
-                  </button>
+                  <div className="joined-actions-container" style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+                    <button 
+                      className="btn-join-large joined" 
+                      disabled
+                    >
+                      ✓ Joined - Waiting for Group
+                    </button>
+                    <button 
+                      className="btn-leave-group" 
+                      onClick={leaveGroup}
+                      disabled={joining}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        border: '1px solid #ef4444',
+                        backgroundColor: 'transparent',
+                        color: '#ef4444',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px'
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = '#fef2f2';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = 'transparent';
+                      }}
+                    >
+                      <X size={16} />
+                      Leave This Group
+                    </button>
+                  </div>
                 ) : !hasPaid ? (
                   <button 
                     className="btn-join-large" 
